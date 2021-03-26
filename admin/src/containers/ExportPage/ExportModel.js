@@ -28,42 +28,31 @@ const ExportModel = ({model}) => {
   };
 
   const downloadXsl = () => {
+
+    var array = SON.parse(JSON.stringify(content))
+    var new_array = array.map(data =>
+      /* Object.entries returns an array of [key, val] pairs */
+      Object.entries(data).reduce((acc, [key, val]) => (
+        /* stringify objects */
+        acc[key] = (typeof val == "object" && val != null && !(val instanceof Date)) ? JSON.stringify(val): val, acc), {}));
+
     const current = new Date();
-    const ws = XLSX.utils.json_to_sheet(JSON.parse(JSON.stringify(content)));
+    const ws = XLSX.utils.json_to_sheet(new_array);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, `data`);
     XLSX.writeFile(wb, `${model.apiID}-${current.getTime()}.xlsx`);
 
   };
 
-  const downloadCsv = () => {
-    let arr = JSON.parse(JSON.stringify(content));
+  function unNestedJson(data) {
+    let dataReturn = [];
 
+    data.forEach((element) => {
 
+    })
 
-    const file = new File([convertToCSV(arr)],
-      `${model.apiID}-${current.getTime()}.csv`,
-      {type: "charset=utf-8"});
-    saveAs(file);
   }
 
-  function convertToCSV(objArray) {
-    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
-    var str = '';
-
-    for (var i = 0; i < array.length; i++) {
-      var line = '';
-      for (var index in array[i]) {
-        if (line != '') line += ','
-
-        line += array[i][index];
-      }
-
-      str += line + '\r\n';
-    }
-
-    return str;
-  }
 
 
 
@@ -85,10 +74,6 @@ const ExportModel = ({model}) => {
                 kind={content ? 'secondaryHotline' : 'secondary'}
         >Download Excel</Button>
 
-        <Button disabled={!content}
-                onClick={downloadCsv}
-                kind={content ? 'secondaryHotline' : 'secondary'}
-        >Download CSV</Button>
 
       </div>
     </HFlex>
