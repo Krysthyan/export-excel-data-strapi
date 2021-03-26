@@ -29,6 +29,7 @@ const ExportModel = ({model}) => {
 
   const downloadXsl = () => {
 
+    const current = new Date();
     const data = JSON.stringify(content);
     console.log(data);
     const ws = XLSX.utils.json_to_sheet(data);
