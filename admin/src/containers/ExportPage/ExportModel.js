@@ -28,10 +28,7 @@ const ExportModel = ({model}) => {
   };
 
   const downloadXsl = () => {
-
     const current = new Date();
-
-    console.log(content);
     const ws = XLSX.utils.json_to_sheet(JSON.parse(JSON.stringify(content)));
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, `data`);
