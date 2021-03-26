@@ -50,7 +50,7 @@ const ExportModel = ({model}) => {
         <Button disabled={!content}
                 onClick={downloadJson}
                 kind={content ? 'secondaryHotline' : 'secondary'}
-        >Download</Button>
+        >Download Json</Button>
 
         <Button disabled={!content}
                 onClick={downloadXsl}
