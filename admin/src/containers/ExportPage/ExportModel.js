@@ -30,9 +30,9 @@ const ExportModel = ({model}) => {
   const downloadXsl = () => {
 
     const current = new Date();
-    const data = JSON.stringify(content);
-    console.log(data);
-    const ws = XLSX.utils.json_to_sheet(data);
+
+    console.log(content);
+    const ws = XLSX.utils.json_to_sheet(content);
     const wb = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(wb, ws, `${model.apiID}`);
     XLSX.writeFile(wb, `${model.apiID}-${current.getTime()}.xlsx`);
