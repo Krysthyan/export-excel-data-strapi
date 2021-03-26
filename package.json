@@ -12,9 +12,9 @@
   },
   "dependencies": {
     "file-saver": "^2.0.2",
-    "json2xls": "^0.1.2",
     "pluralize": "^8.0.0",
-    "strapi-helper-plugin": "^3.0.0-beta.20"
+    "strapi-helper-plugin": "^3.0.0-beta.20",
+    "xlsx": "^0.16.9"
   },
   "author": {
     "name": "lazurey",

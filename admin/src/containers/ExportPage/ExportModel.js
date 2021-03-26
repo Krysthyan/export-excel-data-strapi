@@ -5,7 +5,7 @@ import {fetchEntries} from "../../utils/contentApis";
 import {HFlex, ModelItem} from "./ui-components";
 import JsonDataDisplay from "../../components/JsonDataDisplay";
 
-var json2xls = require('json2xls');
+import XLSX from 'xlsx';
 
 const ExportModel = ({model}) => {
   const [fetching, setFetching] = useState(false);
@@ -28,13 +28,12 @@ const ExportModel = ({model}) => {
   };
 
   const downloadXsl = () => {
-    const current = new Date();
-    const file = new File([JSON.stringify(content)],
-      `${model.apiID}-${current.getTime()}.json`,
-      {type: "application/json;charset=utf-8"});
 
-    const xls = json2xls(file);
-    saveAs(xls);
+    const data = JSON.stringify(content);
+    const ws = XLSX.utils.json_to_sheet(data);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, `${model.apiID}`);
+    XLSX.writeFile(wb, `${model.apiID}-${current.getTime()}.xlsx`);
   };
 
   return (<ModelItem>
