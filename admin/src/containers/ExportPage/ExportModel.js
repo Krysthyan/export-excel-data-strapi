@@ -38,45 +38,31 @@ const ExportModel = ({model}) => {
 
   const downloadCsv = () => {
     let arr = JSON.parse(JSON.stringify(content));
-    let keys = [];
-    let values = [];
-    function getKeys(data, k = '') {
-      for (let i in data) {
-        let rest = k.length ? '_' + i : i
-        if (typeof data[i] == 'object') {
-          if (!Array.isArray(data[i])) {
-            getKeys(data[i], k + rest)
-          }
-        } else keys.push( k+ rest)
+
+
+
+    const file = new File([convertToCSV(arr)],
+      `${model.apiID}-${current.getTime()}.csv`,
+      {type: "charset=utf-8"});
+    saveAs(file);
+  }
+
+  function convertToCSV(objArray) {
+    var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
+    var str = '';
+
+    for (var i = 0; i < array.length; i++) {
+      var line = '';
+      for (var index in array[i]) {
+        if (line != '') line += ','
+
+        line += array[i][index];
       }
-    }
-    function getValues(data, k = '') {
-      for (var i in data) {
-        var rest = k.length ? '' + i : i
-        if (typeof data[i] == 'object') {
-          if (!Array.isArray(data[i])) {
-            getValues(data[i], k + rest)
-          }
-        }
-        else values.push(data[rest])
-      }
+
+      str += line + '\r\n';
     }
 
-    getKeys(arr[0])
-    var value="";
-    arr.forEach(x=>{
-      values=[];
-      getValues(x);
-      value+=values.join(";")+"\r\n";
-    })
-
-    let result = keys.join(";")+"\r\n"+value;
-    let fileToSave = new Blob([result], {
-      type: "csv",
-      name: `${model.apiID}-${current.getTime()}.xlsx`
-    });
-
-    saveAs(fileToSave, `${model.apiID}-${current.getTime()}.xlsx`);
+    return str;
   }
 
 
