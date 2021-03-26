@@ -29,7 +29,7 @@ const ExportModel = ({model}) => {
 
   const downloadXsl = () => {
 
-    var array = SON.parse(JSON.stringify(content))
+    var array = JSON.parse(JSON.stringify(content))
     var new_array = array.map(data =>
       /* Object.entries returns an array of [key, val] pairs */
       Object.entries(data).reduce((acc, [key, val]) => (
