@@ -34,7 +34,7 @@ const ExportModel = ({model}) => {
     console.log(content);
     const ws = XLSX.utils.json_to_sheet(JSON.parse(JSON.stringify(content)));
     const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, `${model.apiID}`);
+    XLSX.utils.book_append_sheet(wb, ws, `data`);
     XLSX.writeFile(wb, `${model.apiID}-${current.getTime()}.xlsx`);
 
   };
